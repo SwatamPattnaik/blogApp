@@ -1,0 +1,69 @@
+{% load static %}
+
+<html>
+    <header>
+        <head>
+            <title>Register</title>
+            <link href="{% static 'blog/css/materialize.css' %}" type="text/css" rel="stylesheet"
+            media="screen,projection" />
+            <link rel="stylesheet" type="text/css" href="{% static 'blog/css/fontawesome_all.min.css' %}">
+
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+            <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+        </head>
+    </header>
+
+ 
+<body>
+    <main>
+        <nav class="blue-grey darken-4 nav-bar-fix z-depth-1" role="navigation">
+            <div class="nav-wrapper container">
+               <div class="center-align">
+                    <div style="font-size:30px;"><a href="{% url 'login' %}">Blog App</a></div>
+               </div>
+            </div>
+        </nav>
+        <div class="bg-class container">
+            <div class="row">
+                <div class="col s12 m6 offset-m3">
+                    <div class="card blue-grey darken-1">
+                        <div class="card-content white-text">
+                            <span class="card-title">Login</span>
+                            <form id="registration_form" method='post' action="{% url 'blog:user_registration' %}">
+                                {% csrf_token %}
+                                <div class="row">
+                                    {% for field in form %}
+                                        <div class="col s12">
+                                            <div class="row" style="height:30px;margin-left:0px;margin-right:0px;">
+                                                <div class="col s12">
+                                                    {{ field.name.errors }}
+                                                </div>
+                                                <div class="col s4" style="padding-top:8px">
+                                                    {{field.label_tag}}
+                                                </div>
+                                                <div class="col s8">
+                                                    {{ field }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                    <div class="col s4 offset-s8">
+                                        <button type="submit" value="Login"
+                                        class="btn btn-primary pull-right" >Submit</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="{% static 'blog/js/libraries/jquery.js'%}"></script>
+    <script src="{% static 'blog/js/libraries/popper.js'%}"></script>
+    <script src="{% static 'blog/js/libraries/materialize.js'%}"></script>
+    <script src="{% static 'blog/js/libraries/fontawesome.js'%}"></script>
+</body>
+
+
+</html>

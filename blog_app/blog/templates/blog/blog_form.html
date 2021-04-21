@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}Blog Form{% endblock %}
+
+{% block content%}
+    <div class="container">
+        <div class="row">
+            <form id="blog_form" method="post" action="{%if edit %}{% url 'blog:edit_blog' blog_id=blog_id%}{%else%}{% url 'blog:blog_form'%}{%endif%}">
+                {% csrf_token %}
+                <div class="row blog_form_row">
+                    {% for field in form%}
+                        <div class="col s12">
+                            {{ field.name.errors }}
+                        </div>
+                        <div class="col s12" style="padding-top:8px">
+                            {{field.label_tag}}
+                        </div>
+                        <div class="col s12">
+                            {{ field }}
+                        </div>
+                    {%endfor%}
+                </div>
+                <button type="submit" class="btn btn-primary pull-right">Submit</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

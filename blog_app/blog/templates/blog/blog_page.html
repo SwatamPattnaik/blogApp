@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block title %}Blog|{{blog.title}}{%endblock%}
+
+{% block content %}
+    <div class="container" id="blog_container" data-id="{{blog.id}}">
+        <div class="row blog_overflow">
+            <div class="col s12">
+                <h4>{{blog.title}}</h4>
+            </div>
+            <div class="col s12">
+                <h6>{{blog.subtitle}}</h6>
+            </div>
+            <div class="col s12 right-align">
+                By&nbsp;<b>{{blog.user.username}}</b>
+            </div>
+            <div class="col s12">
+                <span >
+                    {{blog.body}}
+                </span>
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="row">
+            <div class="col s12">
+                <h6>Comments</h6>
+            </div>
+            <div class="col s12">
+                <textarea id="comment_box">{% if not user.is_authenticated%}Please login to add comments.{% endif %}</textarea>
+                <br>
+                <br>
+                {% if user.is_authenticated%}
+                    <button id="add_comment" class="btn btn-primary pull-right">Post</button>
+                {% endif %}
+            </div>
+            <div class="col s12">
+                <ul class="collection">
+                    {% for comment in comments%}
+                        <li class="collection-item comment_li" data-id="{{comment.id}}">
+                            <span class="commentor">{{comment.user.username}}</span>
+                            <br>
+                            <span class="comment_body">{{comment.body}}</span>
+                            <br>
+                            {% if author and not comment.approved %}
+                            <div class="comment_actions">
+                                <span class="approve_comment green-text cursor-pointer"><i class="fa fa-check"></i>Approve</span>
+                                <span class="reject_comment red-text cursor-pointer"><i class="fa fa-times"></i>Reject</span>
+                            </div>
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    {% csrf_token %}
+{% endblock %}
+
+{% load static %}
+
+{% block javascript%}
+    <script src="{% static 'blog/js/blog/blog_page.js' %}"></script>
+{% endblock %}

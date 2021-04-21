@@ -1,0 +1,62 @@
+{% extends 'base.html'%}
+
+{% block title %}Blogs{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col s12">
+            <ul class="tabs">
+                <li class="tab col s6"><a href="#all_blogs">All Blogs</a></li>
+                <li class="tab col s6"><a href="#my_blogs">My Blogs</a></li>
+            </ul>
+        </div>
+        <div id="all_blogs" class="col s12">
+            {% if all_blogs %}
+            <ul class="collection">    
+                {% for blog in all_blogs %}
+                    <li class="collection-item">
+                        <div class="row">
+                            <div class="col s1"><span>{{forloop.counter}}. </span></div>
+                            <div class="col s11 truncate"><a href="{% url 'blog:blog_page' blog_id=blog.id%}">{{blog.title}}</a></div>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+                <div class="center-align">No blogs to display.</div>
+            {% endif %}
+        </div>
+        <div id="my_blogs" class="col s12">
+            {% if user.is_authenticated %}
+                <div class="right-align new_blog_button">
+                    <a href="{% url 'blog:blog_form' %}"><button class="btn btn-primary">New<i class="fa fa-plus"></i></button></a>
+                </div>
+                {% if my_blogs %}
+                <ul class="collection">
+                    {% for blog in my_blogs %}
+                        <li class="collection-item">
+                            <div class="row">
+                                <div class="col s1"><span>{{forloop.counter}}. </span></div>
+                                <div class="col s10 truncate"><a href="{% url 'blog:blog_page' blog_id=blog.id%}">{{blog.title}}</a></div>
+                                <div class="col s1"><a href="{% url 'blog:edit_blog' blog_id=blog.id%}"><span class="edit_blog"><i class="fa fa-edit"></i></span></a></div>
+                            </div>  
+                        </li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                    <div class="center-align">No blogs to display.</div>
+                {% endif %}
+            {% else %}
+                <div class="center-align">Please login to view your blogs.</div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% load static %}
+
+{% block javascript%}
+    <script src="{% static 'blog/js/blog/index.js' %}"></script>
+{% endblock %}

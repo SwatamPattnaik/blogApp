@@ -1,0 +1,48 @@
+{% load static %}
+
+<html>
+<header>
+<head>
+    <title>{% block title %}{% endblock %}</title>
+    <link href="{% static 'blog/css/materialize.css' %}" type="text/css" rel="stylesheet"
+        media="screen,projection" />
+    <link rel="stylesheet" type="text/css" href="{% static 'blog/css/fontawesome_all.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'blog/css/main.css' %}">
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+</head>
+</header>
+
+<body>
+    <main>
+        <nav class="light-blue nav-bar-fix z-depth-1" role="navigation">
+            <div class="nav-wrapper container">
+                <div class="center-align">
+                    <div style="font-size:30px;"><a href="{% url 'blog:index' %}">Blog App</a></div>
+                    <ul class="right profile_nav">
+                        {% if user.is_authenticated %}
+                        <li><img src="{% static 'blog/images/userlogin.png'%}" class="circle profile_img"></li>    
+                        <li class="username_nav"><a class="dropdown-trigger white-text" href="#" data-target="profile-dropdown">{{user.username}} <i class="fas fa-chevron-down"></i></a>
+                            <ul id="profile-dropdown" class="dropdown-content">
+                                <li><a href="{% url 'blog:user_logout' %}">Logout</a></li>
+                            </ul>
+                        </li>
+                        {%else%}
+                            <li class="login_btn"><a class="white-text btn btn-primary" href="{% url 'login' %}">Login</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        {% block content %}{% endblock %}
+    </main>
+    <script src="{% static 'blog/js/libraries/jquery.js'%}"></script>
+    <script src="{% static 'blog/js/libraries/popper.js'%}"></script>
+    <script src="{% static 'blog/js/libraries/materialize.js'%}"></script>
+    <script src="{% static 'blog/js/libraries/fontawesome.js'%}"></script>
+    <script src="{% static 'blog/js/blog/base.js'%}"></script>
+    {% block javascript %}{% endblock %}
+</body>
+
+</html>

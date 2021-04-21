@@ -1,0 +1,44 @@
+.blog_form_row {
+    padding-top: 20px;
+}
+
+.blog_form_row #id_body {
+    height: 450px;
+}
+
+.edit_blog {
+    float: right;
+}
+
+.blog_overflow,.comment_body {
+    overflow-wrap: break-word;
+}
+
+.commentor {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.new_blog_button {
+    padding: 10px;
+}
+
+.profile_nav {
+    margin-top: -50px;
+}
+
+.username_nav {
+    margin-top: -10px;
+}
+
+.login_btn {
+    margin-top: -15px;
+}
+
+.profile_img {
+    height: 40px;
+}
