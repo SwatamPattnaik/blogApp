@@ -12,17 +12,17 @@ def users(request):
     users = request.GET.get('users')
     if users:
         users = json.loads(users.replace('\'','"'))
-        user_objects = [get_user_object(user.id) for user in User.objects.filter(name__in = users)]
+        user_objects = [get_user_object(user.id) for user in User.objects.filter(name__in = users).order_by('name')]
     else:
-        user_objects = [get_user_object(user.id) for user in User.objects.all()]
+        user_objects = [get_user_object(user.id) for user in User.objects.all().order_by('name')]
     return JsonResponse({'users':user_objects}, safe=False)
 
 def add(request):
     user = request.POST.get('user')
     if user:
         user_object = {'name':user}
-        user_object['owes'] = dict((user.name,0) for user in User.objects.all())
-        user_object['owed_by'] = dict((user.name,0) for user in User.objects.all())
+        user_object['owes'] = dict((user.name,0) for user in User.objects.all().order_by('name'))
+        user_object['owed_by'] = dict((user.name,0) for user in User.objects.all().order_by('name'))
         user_object['balance'] = 0
         User.objects.create(name=user)
         return JsonResponse(user_object, safe=False)
@@ -54,7 +54,7 @@ def iou(request):
         borrower_id = User.objects.get(name=borrower).id
         Transaction.objects.create(borrower=borrower_id,lender=lender_id,amount=amount)
         users = [lender,borrower]
-        user_objects = [get_user_object(user.id) for user in User.objects.filter(name__in = users)]
+        user_objects = [get_user_object(user.id) for user in User.objects.filter(name__in = users).order_by('name')]
         return JsonResponse({users:user_objects}, safe=False)
     else:
         return HttpResponse(status=200)
