@@ -22,5 +22,6 @@ urlpatterns = [
     path('blog/', include('blog.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
     path('', redirect_url, name='redirect_url'),
+    path('payment/', include('paymentApi.urls'))
 ]
 
