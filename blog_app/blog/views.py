@@ -76,7 +76,7 @@ def blog_form(request):
 
 def edit_blog(request,blog_id):
     try:
-        if Blog.objects.filter(id=blog_id).exists:
+        if Blog.objects.filter(id=blog_id).exists():
             blog = Blog.objects.get(id=blog_id)
             if request.user.id != blog.user.id:
                 return HttpResponseRedirect(reverse('blog:index'))
